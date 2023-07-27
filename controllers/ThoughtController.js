@@ -1,0 +1,1 @@
+//make thought first, push thought to user model
