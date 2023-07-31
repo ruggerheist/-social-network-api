@@ -12,7 +12,7 @@ const thoughtSchema = new Schema(
         createdAt: {
             type: Date,
             default: Date.now,
-            get: (createdAtVal) => dateFormat(createdAtVal)
+            // get: (createdAtVal) => dateFormat(createdAtVal, 'mm/dd/yyyy')
         },
         userName: {
             type: String,
@@ -22,12 +22,7 @@ const thoughtSchema = new Schema(
             type: Schema.Types.ObjectId,
             ref: 'User'
         },
-        reactions:[
-            {
-                type: Schema.Types.ObjectId,
-                ref: 'Reaction'
-            }
-        ],
+        reactions: [reactionSchema],
     },
     {
         toJSON: {

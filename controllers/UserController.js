@@ -5,16 +5,16 @@ module.exports = {
     async getAllUsers(req, res) {
       try {
             const users = await User.find()
-            .populate({
-                path: 'user',
-                select: '-__v'
-            })
             // .populate({
-            //     path: 'friends',
+            //     path: 'user',
             //     select: '-__v'
             // })
-            .select('-__v')
-            .sort({ _id: -1 });
+            // // .populate({
+            // //     path: 'friends',
+            // //     select: '-__v'
+            // // })
+            // .select('-__v')
+            // .sort({ _id: -1 });
         res.json(users)
     } catch (err) {
         console.log(err);   
@@ -63,6 +63,7 @@ module.exports = {
                 runValidators: true,
                 new: true
             });
+            res.json(user);
         } catch (err) {
             console.log(err);
         }
@@ -83,8 +84,8 @@ module.exports = {
     async addFriend(req, res) {
         try {
             const user = await User.findOneAndUpdate(
-                { _id: req.params.id },
-                { $addToSet: { friends: req.params.userId } },
+                { _id: req.body.id },
+                { $addToSet: { friends: req.body.userId } },
                 { new: true }
             );
             if (!user) {

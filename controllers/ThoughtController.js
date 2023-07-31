@@ -5,12 +5,12 @@ module.exports = {
     async getAllThoughts(req, res) {
         try {
             const thoughts = await Thought.find()
-            .populate({
-                path: 'user',
-                select: '-__v'
-            })
-            .select('-__v')
-            .sort({ _id: -1 });
+            // .populate({
+            //     path: 'user',
+            //     select: '-__v'
+            // })
+            // .select('-__v')
+            // .sort({ _id: -1 });
             res.json(thoughts);
         } catch (err) {
             console.log(err);
@@ -29,11 +29,11 @@ module.exports = {
     async getThoughtById(req, res) {
         try {
             const thought = await Thought.findOne({ _id: req.params.id })
-            .populate({
-                path: 'user',
-                select: '-__v'
-            })
-            .select('-__v');
+            // .populate({
+            //     path: 'user',
+            //     select: '-__v'
+            // })
+            // .select('-__v');
             if (!thought) {
                 return res.status(404).json({ message: 'No thought found with this id!' });
             }
