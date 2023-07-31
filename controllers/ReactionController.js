@@ -1,7 +1,8 @@
 //make reaction first, push reaction to thought model
-// const { Reaction, Thought } = require('../models');
+const Reaction = require('../models/Reaction');
+const Thought = require('../models/Thought');
 
-const reactionController = {
+module.exports = {
     async addReaction(req, res) {
         try {
             const reaction = await Reaction.create(req.body);
@@ -37,5 +38,3 @@ const reactionController = {
         }
     }
 };
-
-module.exports = reactionController;
