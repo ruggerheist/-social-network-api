@@ -1,12 +1,12 @@
-const { User } = require('../models');
+const User = require('../models/User');
 
-const userController = {
+module.exports = {
     // get all users
     async getAllUsers(req, res) {
       try {
             const users = await User.find()
             .populate({
-                path: 'thoughts',
+                path: 'user',
                 select: '-__v'
             })
             // .populate({
@@ -66,7 +66,49 @@ const userController = {
         } catch (err) {
             console.log(err);
         }
+    },
+    // delete a user by id with associated thoughts
+    async deleteUser(req, res) {
+        try {
+            const user = await User.findOneAndDelete({ _id: req.params.id });
+            if (!user) {
+                return res.status(404).json({ message: 'No user found with this id!' });
+            }
+            res.json(user);
+        } catch (err) {
+            console.log(err);            
+        }
+    },
+    // add a friend to a user's friend list
+    async addFriend(req, res) {
+        try {
+            const user = await User.findOneAndUpdate(
+                { _id: req.params.id },
+                { $addToSet: { friends: req.params.userId } },
+                { new: true }
+            );
+            if (!user) {
+                return res.status(404).json({ message: 'No user found with this id!' });
+            }
+            res.json(user);
+        } catch (err) {
+            console.log(err);
+        }
+    },
+    // remove a friend from a user's friend list
+    async deleteFriend(req, res) {
+        try {
+            const user = await User.findOneAndUpdate(
+                { _id: req.params.id },
+                { $pull: { friends: req.params.userId } },
+                { new: true }
+            );
+            if (!user) {
+                return res.status(404).json({ message: 'No user found with this id!' });
+            }
+            res.json(user);
+        } catch (err) {
+            console.log(err);
+        }
     }
 };
-
-module.exports = userController;

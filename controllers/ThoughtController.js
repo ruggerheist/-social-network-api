@@ -1,6 +1,6 @@
 const Thought = require('../models/Thought');
 
-module.export = {
+module.exports = {
     // get all thoughts
     async getAllThoughts(req, res) {
         try {
@@ -68,6 +68,38 @@ module.export = {
     async deleteThought(req, res) {
         try {
             const thought = await Thought.findOneAndDelete({ _id: req.params.id });
+            if (!thought) {
+                return res.status(404).json({ message: 'No thought found with this id!' });
+            }
+            res.json(thought);
+        } catch (err) {
+            console.log(err);
+        }
+    },
+    // add a reaction to a thought by id
+    async addReaction(req, res) {
+        try {
+            const thought = await Thought.findOneAndUpdate(
+                { _id: req.params.thoughtId },
+                { $addToSet: { reactions: req.body } },
+                { runValidators: true, new: true }
+            );
+            if (!thought) {
+                return res.status(404).json({ message: 'No thought found with this id!' });
+            }
+            res.json(thought);
+        } catch (err) {
+            console.log(err);
+        }
+    },
+    // delete a reaction to a thought by id
+    async deleteReaction(req, res) {
+        try {
+            const thought = await Thought.findOneAndUpdate(
+                { _id: req.params.thoughtId },
+                { $pull: { reactions: { reactionId: req.params.reactionId } } },
+                { runValidators: true, new: true }
+            );
             if (!thought) {
                 return res.status(404).json({ message: 'No thought found with this id!' });
             }

@@ -1,5 +1,5 @@
 //make reaction first, push reaction to thought model
-const Reaction = require('../models/Reaction');
+// const Reaction = require('../models/Reaction');
 const Thought = require('../models/Thought');
 
 module.exports = {

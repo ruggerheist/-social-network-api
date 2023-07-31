@@ -2,7 +2,7 @@
 const User = require('../models/User');
 const Thought = require('../models/Thought');
 
-const { insertMany } = require("../models/User")
+// const { insertMany } = require("../models/User")
 
 const users = [
     {
@@ -28,7 +28,7 @@ const reactions = [
     }
 ]
 
-const connection = require('../config/connection');
+// const connection = require('../config/connection');
 
 async function seedData() {
     await User.insertMany(users);
