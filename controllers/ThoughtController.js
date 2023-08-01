@@ -101,7 +101,7 @@ module.exports = {
                 { runValidators: true, new: true }
             );
             if (!thought) {
-                return res.status(404).json({ message: 'No thought found with this id!' });
+                return res.status(404).json({ message: 'No reaction found with this id!' });
             }
             res.json(thought);
         } catch (err) {
