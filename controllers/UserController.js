@@ -82,6 +82,7 @@ module.exports = {
     },
     // add a friend to a user's friend list
     async addFriend(req, res) {
+        console.log(req.body.id);
         try {
             const user = await User.findOneAndUpdate(
                 { _id: req.body.id },
@@ -98,10 +99,11 @@ module.exports = {
     },
     // remove a friend from a user's friend list
     async deleteFriend(req, res) {
+        console.log(req.body.id);
         try {
-            const user = await User.findOneAndUpdate(
-                { _id: req.params.id },
-                { $pull: { friends: req.params.userId } },
+            const user = await User.findOneAndDelete(
+                { _id: req.body.id },
+                { $pull: { friends: req.body.userId } },
                 { new: true }
             );
             if (!user) {
